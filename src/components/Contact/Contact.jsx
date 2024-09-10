@@ -1,31 +1,36 @@
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { IoIosContact } from "react-icons/io";
 import css from "./Contact.module.css";
-import { deleteContact } from "../../redux/contactsSlice";
+import { deleteContact } from "../../redux/contactsOps";
 import { useDispatch } from "react-redux";
 
-const Contact = ({ contact: { id, name, number }}) => {
+const Contact = ({ contactId, name, phone }) => {
   const dispatch = useDispatch();
+
+  const handleClick = contactId => {
+    const thunk = deleteContact(contactId);
+    dispatch(thunk);
+  };
+
   return (
+    <>
     <div className={css.contactCard}>
       <div className={css.contactInfo}>
         <p className={css.contactText}>
           <IoIosContact />
           {name}
         </p>
-        <p className={css.contactText}>
+        <a href={`tel:${phone}`} className={css.contactText}>
           <BsFillTelephoneFill />
-          {number}
-        </p>
+          {phone}
+        </a>
       </div>
-      <button
-        className={css.contactDeleteBtn}
-        type="button"
-        onClick={() => dispatch(deleteContact(id))}
-      >
+
+      <button onClick={() => handleClick(contactId)} className={css.contactDeleteBtn}>
         Delete
       </button>
-    </div>
+      </div>
+    </>
   );
 };
 
