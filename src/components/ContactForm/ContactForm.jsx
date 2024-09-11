@@ -6,7 +6,7 @@ import { addContact } from "../../redux/contactsOps";
 
 const phoneRegExp = /^[\d-]+$/;
   const ContactSchema = Yup.object().shape({
-    name: Yup.string()
+    username: Yup.string()
       .min(3, "Too Short. Should be more than 3 symbols!")
       .max(50, "Too Long. Should be less than 50 symbols!")
       .required("Required"),
